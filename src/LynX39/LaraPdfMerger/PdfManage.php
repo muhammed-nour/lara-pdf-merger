@@ -32,7 +32,10 @@ class PdfManage
      */
     public function addPDF($filepath, $pages = 'all', $orientation = null)
     {
-        if (file_exists($filepath)) {
+        if (
+            (is_file($filepath) && file_exists($filepath)) ||
+            (filter_var($filepath, FILTER_VALIDATE_URL))
+        ) {
             if (strtolower($pages) != 'all') {
                 $pages = $this->_rewritepages($pages);
             }
